@@ -1,0 +1,34 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1783245490186,
+      "tag": "0000_outstanding_namor",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783246647719,
+      "tag": "0001_mysterious_sir_ram",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783247096017,
+      "tag": "0002_jittery_shinko_yamashiro",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783247340890,
+      "tag": "0003_perpetual_wrecker",
+      "breakpoints": true
+    }
+  ]
+}
