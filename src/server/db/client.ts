@@ -1,14 +1,7 @@
-import { PGlite } from "@electric-sql/pglite";
-import { drizzle } from "drizzle-orm/pglite";
+import { neon } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
 import * as schema from "./schema";
 
-const globalForDb = globalThis as unknown as { pglite?: PGlite };
+const sql = neon(process.env.DATABASE_URL!);
 
-export const client =
-  globalForDb.pglite ?? new PGlite("./.pglite-data");
-
-if (process.env.NODE_ENV !== "production") {
-  globalForDb.pglite = client;
-}
-
-export const db = drizzle({ client, schema });
+export const db = drizzle({ client: sql, schema });

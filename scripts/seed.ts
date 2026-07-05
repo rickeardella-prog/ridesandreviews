@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import { parse } from "csv-parse/sync";
 import { eq } from "drizzle-orm";
-import { client, db } from "../src/server/db/client";
+import { db } from "../src/server/db/client";
 import { parks, rides } from "../src/server/db/schema";
 
 const seedDir = path.join(__dirname, "../src/server/db/seed");
@@ -118,8 +118,6 @@ async function main() {
       });
   }
   console.log(`Seeded ${rideRows.length} rides`);
-
-  await client.close();
 }
 
 main().catch((err) => {
