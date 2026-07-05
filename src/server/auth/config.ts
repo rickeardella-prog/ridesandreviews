@@ -2,11 +2,13 @@ import { DrizzleAdapter } from "@auth/drizzle-adapter";
 import bcrypt from "bcryptjs";
 import { eq } from "drizzle-orm";
 import NextAuth from "next-auth";
+import type { Adapter, AdapterUser } from "next-auth/adapters";
 import type { Provider } from "next-auth/providers";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 import { db } from "../db/client";
 import { accounts, users, verificationTokens } from "../db/schema";
+import { generateUniqueUsername } from "../services/users";
 
 const providers: Provider[] = [
   Credentials({
@@ -52,12 +54,25 @@ if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
   );
 }
 
+const baseAdapter = DrizzleAdapter(db, {
+  usersTable: users,
+  accountsTable: accounts,
+  verificationTokensTable: verificationTokens,
+}) as Required<Adapter>;
+
+// OAuth providers (e.g. Google) only supply name/email/image, but every
+// user in this app needs a unique `username` for their profile URL.
+const adapter: Adapter = {
+  ...baseAdapter,
+  async createUser(user: AdapterUser) {
+    const seed = user.email?.split("@")[0] ?? user.name ?? "user";
+    const username = await generateUniqueUsername(seed);
+    return baseAdapter.createUser({ ...user, username } as AdapterUser);
+  },
+};
+
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  adapter: DrizzleAdapter(db, {
-    usersTable: users,
-    accountsTable: accounts,
-    verificationTokensTable: verificationTokens,
-  }),
+  adapter,
   session: { strategy: "jwt" },
   pages: { signIn: "/login" },
   cookies: {
