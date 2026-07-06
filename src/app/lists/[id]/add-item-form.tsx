@@ -51,7 +51,7 @@ export function AddItemForm({
       <select
         value={selected}
         onChange={(e) => setSelected(e.target.value)}
-        className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+        className="field"
       >
         {options.map((opt) => (
           <option key={opt.value} value={opt.value}>
@@ -63,13 +63,13 @@ export function AddItemForm({
         value={note}
         onChange={(e) => setNote(e.target.value)}
         placeholder="Note (optional)"
-        className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+        className="field"
       />
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-danger">{error}</p>}
       <button
         type="submit"
         disabled={pending || !selected}
-        className="self-start rounded bg-zinc-900 px-4 py-2 text-white disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
+        className="btn-primary self-start"
       >
         {pending ? "Adding..." : "Add to list"}
       </button>

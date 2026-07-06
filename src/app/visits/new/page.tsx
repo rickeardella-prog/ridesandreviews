@@ -10,8 +10,9 @@ export default async function NewVisitPage() {
   const parks = await listParks();
 
   return (
-    <div className="mx-auto max-w-lg px-4 py-8">
-      <h1 className="mb-6 text-2xl font-semibold">Log a visit</h1>
+    <div className="mx-auto max-w-lg px-4 py-10">
+      <p className="eyebrow mb-1">Get those credits</p>
+      <h1 className="mb-6 text-3xl font-bold tracking-tight">Log a visit</h1>
       <LogVisitForm
         parks={parks.map((p) => ({ id: p.id, slug: p.slug, name: p.name }))}
         username={user.username ?? ""}

@@ -13,24 +13,20 @@ export function CreateListForm() {
         placeholder="List title, e.g. Best coasters 2026"
         required
         maxLength={120}
-        className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+        className="field"
       />
       <textarea
         name="description"
         placeholder="Description (optional)"
         rows={2}
-        className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+        className="field"
       />
-      <label className="flex items-center gap-2 text-sm">
-        <input type="checkbox" name="isRanked" defaultChecked />
+      <label className="flex items-center gap-2 text-sm text-mut">
+        <input type="checkbox" name="isRanked" defaultChecked className="accent-accent" />
         Ranked list (ordered, e.g. #1 to #10)
       </label>
-      {state?.error && <p className="text-sm text-red-600">{state.error}</p>}
-      <button
-        type="submit"
-        disabled={pending}
-        className="self-start rounded bg-zinc-900 px-4 py-2 text-white disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
-      >
+      {state?.error && <p className="text-sm text-danger">{state.error}</p>}
+      <button type="submit" disabled={pending} className="btn-primary self-start">
         {pending ? "Creating..." : "Create list"}
       </button>
     </form>

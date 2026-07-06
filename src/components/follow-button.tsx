@@ -35,11 +35,7 @@ export function FollowButton({
     <button
       onClick={toggle}
       disabled={pending}
-      className={
-        following
-          ? "rounded border border-zinc-300 px-3 py-1 text-sm disabled:opacity-50 dark:border-zinc-700"
-          : "rounded bg-zinc-900 px-3 py-1 text-sm text-white disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
-      }
+      className={following ? "btn-secondary" : "btn-primary"}
     >
       {following ? "Following" : "Follow"}
     </button>

@@ -5,19 +5,38 @@ export async function Header() {
   const session = await auth();
 
   return (
-    <header className="border-b border-zinc-200 dark:border-zinc-800">
-      <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="text-lg font-semibold">
+    <header className="sticky top-0 z-10 border-b border-line bg-night/90 backdrop-blur">
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+        <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
+          <span className="flex items-center gap-1">
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-accent" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-go" />
+            <span className="inline-block h-2.5 w-2.5 rounded-full bg-lift" />
+          </span>
           ParkLog
         </Link>
-        <nav className="flex items-center gap-4 text-sm">
-          <Link href="/parks">Parks</Link>
+        <nav className="flex items-center gap-5 text-sm font-medium">
+          <Link href="/parks" className="text-mut transition hover:text-ink">
+            Parks
+          </Link>
           {session?.user ? (
             <>
-              <Link href="/feed">Feed</Link>
-              <Link href="/lists">Lists</Link>
-              <Link href="/visits/new">Log a visit</Link>
-              <Link href={`/u/${session.user.username}`} className="text-zinc-500">
+              <Link href="/feed" className="text-mut transition hover:text-ink">
+                Feed
+              </Link>
+              <Link href="/lists" className="text-mut transition hover:text-ink">
+                Lists
+              </Link>
+              <Link
+                href="/visits/new"
+                className="rounded-md bg-accent px-3 py-1.5 text-sm font-semibold text-night transition hover:bg-accent-soft"
+              >
+                + Log
+              </Link>
+              <Link
+                href={`/u/${session.user.username}`}
+                className="text-mut transition hover:text-ink"
+              >
                 @{session.user.username}
               </Link>
               <form
@@ -26,15 +45,23 @@ export async function Header() {
                   await signOut({ redirectTo: "/" });
                 }}
               >
-                <button type="submit" className="underline">
+                <button
+                  type="submit"
+                  className="text-faint transition hover:text-ink"
+                >
                   Log out
                 </button>
               </form>
             </>
           ) : (
             <>
-              <Link href="/login">Log in</Link>
-              <Link href="/signup" className="underline">
+              <Link href="/login" className="text-mut transition hover:text-ink">
+                Log in
+              </Link>
+              <Link
+                href="/signup"
+                className="rounded-md bg-accent px-3 py-1.5 text-sm font-semibold text-night transition hover:bg-accent-soft"
+              >
                 Sign up
               </Link>
             </>

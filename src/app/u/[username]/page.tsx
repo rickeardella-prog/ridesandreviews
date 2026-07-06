@@ -26,61 +26,79 @@ export default async function ProfilePage({
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold">@{user.username}</h1>
-          <p className="text-zinc-500">{user.name}</p>
+    <div className="mx-auto max-w-3xl px-4 py-10">
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <span className="flex h-16 w-16 items-center justify-center rounded-full bg-raised text-2xl font-bold text-accent">
+            {user.username.slice(0, 1).toUpperCase()}
+          </span>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">@{user.username}</h1>
+            <p className="text-mut">{user.name}</p>
+          </div>
         </div>
         {currentUser && currentUser.id !== user.id && (
-          <FollowButton followeeId={user.id} initiallyFollowing={viewerIsFollowing} />
+          <FollowButton
+            followeeId={user.id}
+            initiallyFollowing={viewerIsFollowing}
+          />
         )}
       </div>
-      {user.bio && <p className="mt-2">{user.bio}</p>}
+      {user.bio && <p className="mt-4 text-mut">{user.bio}</p>}
 
-      <div className="mt-6 flex gap-8 text-sm">
-        <div>
-          <span className="block text-xl font-semibold">{stats.parksVisited}</span>
-          <span className="text-zinc-500">parks visited</span>
+      <div className="mt-8 grid grid-cols-3 gap-3">
+        <div className="card p-4 text-center">
+          <span className="block text-2xl font-extrabold text-accent">
+            {stats.parksVisited}
+          </span>
+          <span className="text-xs text-faint uppercase tracking-wider">
+            parks visited
+          </span>
         </div>
-        <div>
-          <span className="block text-xl font-semibold">{stats.ridesRidden}</span>
-          <span className="text-zinc-500">rides ridden</span>
+        <div className="card p-4 text-center">
+          <span className="block text-2xl font-extrabold text-accent">
+            {stats.ridesRidden}
+          </span>
+          <span className="text-xs text-faint uppercase tracking-wider">
+            credits
+          </span>
         </div>
-        <div>
-          <span className="block text-xl font-semibold">
+        <div className="card p-4 text-center">
+          <span className="block text-2xl font-extrabold text-accent">
             {stats.avgRatingGiven ? stats.avgRatingGiven.toFixed(1) : "—"}
           </span>
-          <span className="text-zinc-500">avg rating given</span>
+          <span className="text-xs text-faint uppercase tracking-wider">
+            avg rating
+          </span>
         </div>
       </div>
 
-      <h2 className="mt-8 mb-3 text-xl font-semibold">Diary</h2>
+      <h2 className="eyebrow mt-10 mb-3">Diary</h2>
       <ul className="flex flex-col gap-3">
         {diary.map((entry) => {
           const rideLogCount = Number(entry.rideLogCount);
           return (
-            <li
-              key={entry.id}
-              className="border-t border-zinc-200 pt-3 dark:border-zinc-800"
-            >
-              <div className="flex items-center justify-between">
-                <Link href={`/parks/${entry.parkSlug}`} className="font-medium underline">
+            <li key={entry.id} className="card p-4">
+              <div className="flex items-center justify-between gap-3">
+                <Link
+                  href={`/parks/${entry.parkSlug}`}
+                  className="font-semibold hover:text-accent"
+                >
                   {entry.parkName}
                 </Link>
-                <span className="text-sm text-zinc-500">{entry.visitedOn}</span>
+                <span className="text-xs text-faint">{entry.visitedOn}</span>
               </div>
               {rideLogCount > 0 && (
-                <p className="text-sm text-zinc-500">
-                  {rideLogCount} ride{rideLogCount === 1 ? "" : "s"} logged
+                <p className="mt-1 text-xs text-faint">
+                  {rideLogCount} credit{rideLogCount === 1 ? "" : "s"} logged
                 </p>
               )}
-              {entry.notes && <p className="mt-1 text-sm">{entry.notes}</p>}
+              {entry.notes && <p className="mt-2 text-sm text-mut">{entry.notes}</p>}
             </li>
           );
         })}
         {diary.length === 0 && (
-          <p className="text-sm text-zinc-500">No visits logged yet.</p>
+          <p className="text-sm text-faint">No visits logged yet.</p>
         )}
       </ul>
     </div>

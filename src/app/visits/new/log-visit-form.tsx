@@ -76,7 +76,7 @@ export function LogVisitForm({
         <select
           value={parkId}
           onChange={(e) => handleParkChange(e.target.value)}
-          className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+          className="field"
         >
           {parks.map((park) => (
             <option key={park.id} value={park.id}>
@@ -93,19 +93,25 @@ export function LogVisitForm({
           value={visitedOn}
           onChange={(e) => setVisitedOn(e.target.value)}
           required
-          className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+          className="field"
         />
       </label>
 
       {rides.length > 0 && (
-        <fieldset className="flex flex-col gap-1 text-sm">
-          <legend className="mb-1 font-medium">Rides you rode</legend>
+        <fieldset className="flex flex-col gap-1.5 text-sm">
+          <legend className="mb-2 font-medium">
+            Credits earned <span className="text-faint">(rides you rode)</span>
+          </legend>
           {rides.map((ride) => (
-            <label key={ride.id} className="flex items-center gap-2">
+            <label
+              key={ride.id}
+              className="flex items-center gap-2 rounded-md border border-line bg-surface px-3 py-2 transition hover:border-faint"
+            >
               <input
                 type="checkbox"
                 checked={selectedRideIds.includes(ride.id)}
                 onChange={() => toggleRide(ride.id)}
+                className="accent-accent"
               />
               {ride.name}
             </label>
@@ -119,15 +125,16 @@ export function LogVisitForm({
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           rows={3}
-          className="rounded border border-zinc-300 px-3 py-2 dark:border-zinc-700"
+          placeholder="Crowds, weather, ERT, one-train ops..."
+          className="field"
         />
       </label>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-danger">{error}</p>}
       <button
         type="submit"
         disabled={pending || !parkId}
-        className="self-start rounded bg-zinc-900 px-4 py-2 text-white disabled:opacity-50 dark:bg-zinc-100 dark:text-zinc-900"
+        className="btn-primary self-start"
       >
         {pending ? "Saving..." : "Log visit"}
       </button>

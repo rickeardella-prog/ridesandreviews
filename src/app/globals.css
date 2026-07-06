@@ -1,26 +1,62 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ParkLog design system — dark, cinematic, Letterboxd-inspired.
+   The palette is always dark; there is no light mode. */
+@theme {
+  --color-night: #14181c;
+  --color-surface: #1b232b;
+  --color-raised: #232e38;
+  --color-line: #2c3743;
+  --color-ink: #e8eef4;
+  --color-mut: #93a5b5;
+  --color-faint: #5c6d7c;
+  --color-accent: #ff7a1a;
+  --color-accent-soft: #ffb37a;
+  --color-lift: #38b6f0;
+  --color-go: #00c853;
+  --color-danger: #ff5d5d;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-night);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #14181c;
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md bg-accent px-4 py-2 text-sm font-semibold text-night transition hover:bg-accent-soft disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-md border border-line bg-surface px-4 py-2 text-sm font-semibold text-ink transition hover:border-faint hover:bg-raised disabled:opacity-50;
+  }
+
+  .field {
+    @apply rounded-md border border-line bg-surface px-3 py-2 text-sm text-ink placeholder:text-faint focus:border-accent focus:outline-none;
+  }
+
+  .card {
+    @apply rounded-lg border border-line bg-surface transition hover:border-faint;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-raised px-2.5 py-0.5 text-xs font-medium text-mut;
+  }
+
+  .rating-badge {
+    @apply inline-flex items-center gap-1 rounded-md bg-raised px-2 py-0.5 text-sm font-bold text-accent;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold tracking-widest text-faint uppercase;
+  }
 }
